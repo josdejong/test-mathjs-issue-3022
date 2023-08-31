@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import { useState } from 'react'
 import './App.css';
+import { evaluate, format } from 'mathjs'
+
+function tryEvaluate(expr) {
+  try {
+    return format(evaluate(expr))
+  } catch (err) {
+    return String(err)
+  }
+}
 
 function App() {
+  const [expr, setExpr] = useState('sqrt(-16)')
+  const result = tryEvaluate(expr)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input value={expr} onChange={event => setExpr(event.target.value)} />
+      <div>
+      Result: {result}
+      </div>
     </div>
   );
 }
